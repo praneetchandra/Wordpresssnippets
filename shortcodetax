@@ -1,0 +1,25 @@
+//Create shortcode from taxonomy
+
+//Locations Grid Shortcode
+function show_locations() {
+						// get all terms in the taxonomy
+						$terms = get_terms( array(
+							'taxonomy' => 'travel_locations'
+						) );
+	//BugFu::log($terms);
+	$output = '<div class="location-shortcode wp-travel-itinerary-items"><div class="wp-travel-itinerary-items wptravel-archive-wrapper  grid-view itinerary-4-per-row">';
+	foreach($terms as $term){
+		$term_link = get_term_link( $term );
+		$image_id = get_term_meta( $term->term_id, 'wp_travel_trip_type_image_id', true );
+		$post_thumbnail_img = wp_get_attachment_image_src( $image_id, 'original' );  
+		//BugFu::log($post_thumbnail_img);
+		$output .='<div class="view-box location-box"> <div class="view-image">';
+		$output .= '<a href="'.$term_link.'" class="image-thumb">';
+		$output .=  '<div class="image-overlay"></div>
+				<img loading="lazy" width="250" height="400" src="' .$post_thumbnail_img[0]. '"class="attachment-wp_travel_thumbnail size-wp_travel_thumbnail wp-post-image" alt="'.$term->name.'"></a>';
+		$output .='<div class="centered-text"><h2 class="entry-title">'.$term->name.'</h2><p class="tour-count">'.$term->count.' Tour(s)</p></div></div></div>';
+	}
+	$output .= '</div></div>';
+	return $output;
+}
+add_shortcode('travel-locations1', 'show_locations');
