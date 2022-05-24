@@ -1,0 +1,62 @@
+add_action('wp_footer', 'custom_atc_button');
+function custom_atc_button(){
+	
+	global $product;
+  	
+	if ( is_product() ) : ?>
+<div class="fixed-cta">
+	<form class="cart" action="<?php echo get_permalink( $product->get_id() ) ?>" method="post" enctype="multipart/form-data">
+		<button type="submit" name="add-to-cart" value="<?php echo $product->get_id() ?>" class="single_add_to_cart_button">Add to cart</button>
+	</form>
+	<div class="buy-now">
+		<a href="<?php echo wc_get_checkout_url(); ?>?add-to-cart=<?php echo $product->get_id() ?>">Buy Now</a>
+	</div>
+</div>
+
+		
+	<?php endif;
+}
+
+// Use CSS for Mobile Device Only
+.fixed-cta{
+		position:fixed;
+		bottom:0;
+		left:0;
+		width:100%;
+		display:flex;
+		z-index: 99999999;
+	}
+	
+	.fixed-cta .cart{
+		display:flex;
+		flex:0 0 50%;
+		background:orange;
+		
+		
+	}
+	
+	.fixed-cta button{
+		background:orange;
+		color:#222;
+		text-align:center;
+		display:block;
+		padding:12px 20px;
+		border:none;
+		cursor:pointer;
+		width:100%;
+		font-size:16px;
+	}
+	
+	.fixed-cta .buy-now{
+		flex:0 0 50%;
+		text-align:center;
+	}
+	
+	.fixed-cta .buy-now a{
+		display:block;
+		color:#fff;
+		font-size:16px;
+		padding:12px 20px;
+			background:green;
+			
+	}
